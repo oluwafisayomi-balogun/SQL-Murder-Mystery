@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/Users/cgot2/Downloads/sql-murder-mystery.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="browser pragmas structure query" current="3"/></window><tab_structure><column_width id="0" width="197"/><column_width id="1" width="0"/><column_width id="2" width="52"/><column_width id="3" width="6659"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,18:maincrime_scene_report"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="Suspects" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="105"/><column index="2" value="102"/><column index="4" value="111"/><column index="5" value="43"/><column index="6" value="72"/><column index="7" value="94"/><column index="8" value="165"/><column index="9" value="136"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="crime_scene_report" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="63"/><column index="2" value="65"/><column index="3" value="449"/><column index="4" value="120"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="drivers_license" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="49"/><column index="2" value="40"/><column index="3" value="49"/><column index="4" value="72"/><column index="5" value="73"/><column index="6" value="54"/><column index="7" value="98"/><column index="8" value="94"/><column index="9" value="139"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="facebook_event_checkin" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="72"/><column index="2" value="65"/><column index="3" value="300"/><column index="4" value="63"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="income" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="70"/><column index="2" value="104"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="interview" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="72"/><column index="2" value="300"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="person" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="42"/><column index="2" value="140"/><column index="3" value="71"/><column index="4" value="117"/><column index="5" value="169"/><column index="6" value="70"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="solution" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort><column index="2" mode="0"/></sort><column_widths><column index="1" value="40"/><column index="2" value="43"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="Know Your Database">--Run this query to find the names of the tables in this database.
+SELECT name 
+	FROM sqlite_master
+	where type = 'table'
+  
+--Run this query to find the structure of the `crime_scene_report` table
+--Change the value of 'name' to see the structure of the other tables 
+
+SELECT sql 
+	FROM sqlite_master
+    where name = 'crime_scene_report'
+--	where name = 'drivers_license'
+-- 	where name = 'facebook_event_checkin'
+-- 	where name = 'get_fit_now_check_in'
+-- 	where name = 'get_fit_now_member'
+-- 	where name = 'income'
+-- 	where name = 'interview'
+--  where name = 'person'</sql><sql name="Find The Killer">-- A crime has taken place and the detective needs your help. 
+-- The detective gave you the crime scene report, but you somehow lost it. 
+-- You vaguely remember that the crime was a ​murder​ that occurred sometime on ​Jan.15, 2018​ and that it took place in ​SQL City​. 
+
+-- Retrieve the corresponding crime scene report from the police department’s database.
+SELECT * 
+	FROM crime_scene_report
+	WHERE city LIKE '%SQL City%' 
+	AND type = 'murder'
+	AND date = '20180115'
+;
+-- Security footage shows that there were 2 witnesses. 
+-- The first witness lives at the last house on &quot;Northwestern Dr&quot;. 
+-- The second witness, named Annabel, lives somewhere on &quot;Franklin Ave&quot;.
+
+*******************************************************************************************************************
+-- Check witnesses' records
+-- First Witness
+SELECT * 
+	FROM person
+	WHERE address_street_name LIKE '%Northwestern Dr%' 
+	ORDER BY address_number DESC
+	LIMIT 1
+;
+-- RESULT
+-- 1st Witness is 'Morty Schapiro' with id - '14887', license_id - '118009', ssn - 111564949, 
+-- address_street_name - 'Northwestern Dr' and address_number - '4919'
+	
+	
+-- Second Witness
+SELECT * 
+	FROM person
+	WHERE address_street_name LIKE '%Franklin Ave%'
+	AND name LIKE '%Annabel%'
+;
+-- RESULT
+-- 2nd Witness is 'Annabel Miller' with id - '16371', license_id - '490173', ssn - 318771143, 
+-- address_street_name - 'Franklin Ave' and address_number - '103
+
+***********************************************************************************************************
+
+SELECT i.* 
+	FROM interview i
+	INNER JOIN person p
+	ON i.person_id = p.id
+	WHERE p.id = '14887' or p.id = '16371'
+;
+-- 1st Witness Transcript
+-- I heard a gunshot and then saw a man run out. He had a &quot;Get Fit Now Gym&quot; bag. 
+-- The membership number on the bag started with &quot;48Z&quot;. Only gold members have those bags. 
+-- The man got into a car with a plate that included &quot;H42W&quot;.
+
+-- 2nd Witness Transcript
+-- I saw the murder happen, and I recognized the killer from my gym 
+-- when I was working out last week on January the 9th.
+
+**************************************************************************************************************
+
+CREATE VIEW [Suspects] AS
+SELECT g1.*, g2.*
+	FROM get_fit_now_check_in g1
+	JOIN get_fit_now_member g2
+	ON g1.membership_id = g2.id 
+	WHERE g2.membership_status = 'gold'
+	AND g1.membership_id LIKE '48Z%'
+	AND check_in_date = '20180109'
+;
+
+-- We currently have 2 suspects
+-- Suspect 1:
+-- membership_id = 48Z7A; check_in_date = 20180109; check_in_time = 1600; check_out_time =	1730	
+-- id = 48Z7A; person_id = 28819; name = Joe Germuska; membership_start_date = 20160305; membership_status = gold
+
+-- Suspect 2:
+-- membership_id = 48Z55; check_in_date = 20180109; check_in_time = 1530;	check_out_time = 1700;
+-- id = 48Z55;	 person_id = 67318; name = Jeremy Bowers;  membership_start_date = 20160101; membership_status = gold	
+
+**************************************************************************************************************	
+
+CREATE VIEW [Suspects2] AS
+SELECT p.id, p.name, d.plate_number 
+	FROM drivers_license d
+	JOIN person p
+	ON p.license_id = d.id
+	WHERE d.plate_number LIKE '%H42W%'
+;
+
+***************************************************************************************************************
+
+-- Find row(s) that appear(s) in both views	
+SELECT *
+	FROM Suspects s1
+	JOIN Suspects2 s2
+	ON s1.person_id = s2.id
+;
+-- Jeremy Bowers.
+
+-- Congrats, you found the murderer! But wait, there's more... If you think you're up for a challenge, try querying the interview transcript of the murderer to find the real villain behind this crime.
+
+*************************************************************************************************************
+
+SELECT * 
+	FROM interview
+	WHERE person_id = 67318
+;
+-- RESULT
+-- I was hired by a woman with a lot of money. I don't know her name but I know she's around 5'5&quot; (65&quot;) or 5'7&quot; (67&quot;). 
+-- She has red hair and she drives a Tesla Model S. I know that she attended the SQL Symphony Concert 3 times in December 2017.
+
+***************************************************************************************************************
+
+SELECT p.*, d.*
+	FROM person p
+	JOIN drivers_license d
+	ON p.license_id = d.id
+	WHERE d.gender = 'female'
+	AND d.height BETWEEN 65 and 67
+	AND d.hair_color = 'red'
+	AND d.car_make = 'Tesla'
+	AND p.id IN
+		(SELECT f.person_id
+			FROM facebook_event_checkin f
+			WHERE f.event_name = 'SQL Symphony Concert'
+			AND f.date LIKE '201712%'
+			GROUP BY f.person_id
+			HAVING count(person_id) = 3
+		)
+;
+-- RESULT
+-- id - 99716; name - Miranda Priestly; license_id - 202298
+
+******************************************************************************************************************
+	
+
+</sql><current_tab id="1"/></tab_sql></sqlb_project>
