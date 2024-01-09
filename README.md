@@ -3,13 +3,13 @@ A crime has taken place and the detective needs your help. The detective gave yo
 
 
 **Retrieving the corresponding crime scene report from the police department’s database.**
-'SELECT * 
+`SELECT * 
 	FROM crime_scene_report
 	WHERE city LIKE '%SQL City%' 
 	AND type = 'murder'
 	AND date = '20180115'
-;'
-
+;
+`
 -- Security footage shows that there were 2 witnesses. 
 -- The first witness lives at the last house on "Northwestern Dr". 
 -- The second witness, named Annabel, lives somewhere on "Franklin Ave".
